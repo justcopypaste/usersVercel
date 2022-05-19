@@ -3,12 +3,10 @@ const { Sequelize, Model, DataTypes } = require("sequelize");
 const sequelize = new Sequelize('postgresql://postgres:dp$m3-eV4jyBvVR@db.eemlqvkorfcljgmacfiq.supabase.co:5432/postgres', {
     logging: false,
     dialect: 'postgres',
+    dialectModule: require('pg')
     }
 );
 
-if(sequelize.dialect == 'postgres'){
-    sequelize.dialectModule = require('pg');
-}
 
 class User extends Model{
 
