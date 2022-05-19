@@ -4,7 +4,11 @@ const sequelize = new Sequelize('postgresql://postgres:dp$m3-eV4jyBvVR@db.eemlqv
     logging: false,
     dialect: 'postgres',
     }
-    );
+);
+
+if(sequelize.dialect == 'postgres'){
+    sequelize.dialectModule = require('pg');
+}
 
 class User extends Model{
 
