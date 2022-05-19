@@ -1,6 +1,10 @@
 const { Sequelize, Model, DataTypes } = require("sequelize");
 
-const sequelize = new Sequelize('postgres://postgres:dp$m3-eV4jyBvVR@db.eemlqvkorfcljgmacfiq.supabase.co:5432/postgres', {logging: false});
+const sequelize = new Sequelize('postgresql://postgres:dp$m3-eV4jyBvVR@db.eemlqvkorfcljgmacfiq.supabase.co:5432/postgres', {
+    logging: false,
+    dialect: 'postgres',
+    }
+    );
 
 class User extends Model{
 
