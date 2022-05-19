@@ -1,0 +1,45 @@
+<!-- HEAD -->
+{% include "templates/head.njk" %}
+
+<body>
+    <div class="container pb-4">
+      <h1 class="my-4">Crear usuario</h1>
+      <div class="row">
+        <div class="col-md-4">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <form action="/usuarios/crear" method="post" enctype="multipart/form-data">
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Nombre</label>
+                        <input
+                        type="text"
+                        name="name"
+                        placeholder="Ingresar nombre..."
+                        class="form-control"
+                        required="true"
+                        />
+                    </div>
+                    <div class="mb-3">
+                        <label for="surname" class="form-label">Apellido</label>
+                        <input
+                        type="text"
+                        name="surname"
+                        placeholder="Ingresar apellido..."
+                        class="form-control"
+                        required="true"
+                        />
+                    </div>
+                    <div class="mb-3">
+                        <label for="age" class="form-label">Avatar</label>
+                        <input id="image" name="avatar" type="file" class="form-control"/>
+                    </div>
+                    <button type="submit" id="button" class="btn btn-success">
+                        Guardar
+                    </button>
+                    </form>
+                </div>
+            </div>
+            <a href="/usuarios" class="btn btn-primary">Volver</a>
+        </div>
+    </div>
+</body>

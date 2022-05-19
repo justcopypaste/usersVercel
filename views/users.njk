@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+  <!-- HEAD -->
+  {% include "templates/head.njk" %}
+
+  <body>
+    <div class="container pb-4">
+      <h1 class="my-4">Listado de Usuarios</h1>
+      <div class="row">
+        <div class="col-md-5">
+          <table class="table table-bordered table-striped table-hover">
+            <thead>
+              <th>Id</th>
+              <th>Nombre</th>
+              <th>Apellido</th>
+              <th>Avatar</th>
+              <th>Acciones</th>
+            </thead>
+            <tbody>
+              {% for user in users %}
+              <tr>
+                <td>{{ user.id }}</td>
+                <td>{{ user.name }}</td>
+                <td>{{ user.surname }}</td>
+                <td><img src="img/{{ user.avatar }}" class="avatar"/></td>
+                <td>
+                  <a
+                    href="/usuarios/modificar?id={{ user.id }}"
+                    class="btn btn-sm btn-warning mod"
+                  >
+                    Editar
+                  </a>
+                  <a
+                    href="/usuarios/eliminar?id={{ user.id }}"
+                    class="btn btn-sm btn-danger"
+                  >
+                    Eliminar
+                  </a>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+          <br>
+          <a href="/" class="btn btn-primary">Ir a la página de Inicio</a>
+        </div>
+        <div class="col-md-4">
+          <a href="/usuarios/crear" class="btn btn-success">Crear Usuario</a>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
