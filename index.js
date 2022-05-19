@@ -1,4 +1,5 @@
 const app = require('./server');
+require('dotenv').config();
 
 const host = "http://localhost";
 const port = process.env.PORT || 8080;

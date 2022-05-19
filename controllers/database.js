@@ -1,18 +1,6 @@
 const { Sequelize, Model, DataTypes } = require("sequelize");
 
-/*const sequelize = new Sequelize(
-    process.env.DB_DATABASE,
-    process.env.DB_USERNAME,
-    process.env.DB_PASSWORD,
-    {
-        host: process.env.DB_HOST,
-        dialect: process.env.DB_CONNECTION,
-        logging: false
-    }
-);*/
-
 const sequelize = new Sequelize('postgres://postgres:dp$m3-eV4jyBvVR@db.eemlqvkorfcljgmacfiq.supabase.co:5432/postgres', {logging: false});
-
 
 class User extends Model{
 
