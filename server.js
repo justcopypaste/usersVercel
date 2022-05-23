@@ -6,6 +6,7 @@ require('dotenv').config();
 
 const app = express();
 
+
 nunjucks.configure(__dirname+"/views", {
   autoescape: true,
   express: app,

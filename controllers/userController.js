@@ -1,33 +1,66 @@
 const db = require('./database');
+const fs = require('fs');
+const path = require('path');
 const formidable = require('formidable');
+const { createClient } = require('@supabase/supabase-js');
+require('dotenv').config();
 
-const post_usuarios = (req, res) => {
+const post_usuarios =  (req, res) => {
+    const supabase = createClient(process.env.SB_HOST,process.env.SB_KEY);
+
     const form = formidable({
-        multiples:false,
-        uploadDir:__dirname+"/../public/img",
-        keepExtensions:true
+        multiples: false,
+        keepExtensions: true
     });
+    
     switch (req.params['opcion']) {
         case "crear":
             form.parse(req, (err, fields, files) => {
-                db.createUser(fields.name, fields.surname, files.avatar.newFilename).then((r)=>{
-                    res.redirect("/usuarios");
-                });
-             });
+                if(files.avatar.originalFilename != ""){
+                    const filePath = files.avatar.filepath;
+                    const ext = path.extname(filePath);
+                    const newFileName = `image_${Date.now()}${ext}`;
+                    supabase.storage.from('clase10').upload(
+                        newFileName,
+                        fs.createReadStream(filePath),
+                        {
+                            upsert: false,
+                            contentType: files.avatar.contentType,
+                        }
+                    ).then((data, err) => {
+                        if(err) console.log(err);
+                    });
+                    
+                    db.createUser(fields.name, fields.surname, newFileName).then((r)=>{
+                        res.redirect("/usuarios");
+                    });
+                }
+            });
             break;
 
         case "modificar":
             form.parse(req, (err, fields, files) => {
-                const user = {
-                    id: fields.id,
-                    name: fields.name,
-                    surname: fields.surname,
-                    avatar: files.avatar.newFilename
-                };
-                db.updateUser(user).then((r)=>{
-                    res.redirect("/usuarios");
-                });
-             });
+                if(files.avatar.originalFilename != ""){
+                    const filePath = files.avatar.filepath;
+                    const ext = path.extname(filePath);
+                    const newFileName = `image_${Date.now()}${ext}`;
+                    supabase.storage.from('clase10').upload(
+                        newFileName,
+                        fs.createReadStream(filePath),
+                        {
+                            upsert: false,
+                            contentType: files.avatar.contentType,
+                        }
+                    ).then((data, err) => {
+                        if(err) console.log(err);
+                    });
+                    
+                    db.updateUser(fields.name, fields.surname, newFileName).then((r)=>{
+                        res.redirect("/usuarios");
+                    });
+                }
+            });
+            break;
             break;
         
         default:
