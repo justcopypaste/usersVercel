@@ -1,9 +1,10 @@
-const db = require('./database');
+const db = require('../config/database');
 const fs = require('fs');
 const path = require('path');
 const formidable = require('formidable');
 const { createClient } = require('@supabase/supabase-js');
 require('dotenv').config();
+const bcrypt = require('bcryptjs');
 
 const post_usuarios =  (req, res) => {
     const supabase = createClient(process.env.SB_HOST,process.env.SB_KEY);
@@ -30,8 +31,8 @@ const post_usuarios =  (req, res) => {
                     ).then((data, err) => {
                         if(err) console.log(err);
                     });
-                    
-                    db.createUser(fields.name, fields.surname, newFileName).then((r)=>{
+                    const pass = bcrypt.hashSync(fields.password);
+                    db.createUser(fields.email, fields.name, fields.surname, pass, newFileName).then((r)=>{
                         res.redirect("/usuarios");
                     });
                 }
@@ -55,12 +56,13 @@ const post_usuarios =  (req, res) => {
                         if(err) console.log(err);
                     });
                     
-                    db.updateUser(fields.name, fields.surname, newFileName).then((r)=>{
-                        res.redirect("/usuarios");
+                    db.findUser(fields.email).then((u)=>{
+                        db.updateUser(fields.email, fields.name, fields.surname, u.pass, newFileName).then((r)=>{
+                            res.redirect("/usuarios");
+                        });
                     });
                 }
             });
-            break;
             break;
         
         default:
@@ -95,7 +97,14 @@ const get_usuarios = (req, res) => {
     }
 }
 
+const get_login = (req,res) => {
+    const err = req.query.err ? true : false;
+    res.render('login', {err});
+}
+
 module.exports= {
     post_usuarios,
-    get_usuarios
+    get_usuarios,
+    get_login
+
 }

@@ -17,13 +17,13 @@ class User extends Model{
 const initDB = () => {
     User.init(  
         {
-            id:{
-                type: DataTypes.INTEGER,
+            email:{
+                type: DataTypes.STRING,
                 primaryKey: true,
-                autoIncrement: true,
             },
             name:DataTypes.STRING,
             surname:DataTypes.STRING,
+            password:DataTypes.STRING,
             avatar:DataTypes.STRING,  
         },  
         { sequelize, modelName:"user" }
@@ -37,11 +37,13 @@ const initDB = () => {
     );
 }
 
-const createUser = (name, surname, avatar) => {
+const createUser = (email, name, surname, password, avatar) => {
     return new Promise((resolve, reject) => {
         User.create({
+            email,
             name,
             surname,
+            password,
             avatar
         }).then((res) => {
             resolve(res);
@@ -59,9 +61,9 @@ const getUsers = () => {
     });
 }
 
-const findUser = (id) => {
+const findUser = (email) => {
     return new Promise((resolve, reject) => {
-        User.findByPk(id).then((user) => {
+        User.findByPk(email).then((user) => {
             resolve(user);
         }).catch((err)=>{reject(err)});
     });
@@ -69,7 +71,7 @@ const findUser = (id) => {
 
 const updateUser = (u) => {
     return new Promise((resolve, reject) => {
-        User.update({name: u.name, surname: u.surname, avatar: u.avatar},{where: {id: u.id}})
+        User.update({email: e.email, name: u.name, surname: u.surname, password: u.password, avatar: u.avatar},{where: {email: u.email}})
         .then((res) => {
             resolve(res);
         }).catch((err)=>{

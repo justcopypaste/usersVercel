@@ -10,18 +10,18 @@
         <div class="col-md-5">
           <table class="table table-bordered table-striped table-hover">
             <thead>
-              <th>Id</th>
               <th>Nombre</th>
               <th>Apellido</th>
+              <th>Email</th>
               <th>Avatar</th>
               <th>Acciones</th>
             </thead>
             <tbody>
               {% for user in users %}
               <tr>
-                <td>{{ user.id }}</td>
                 <td>{{ user.name }}</td>
                 <td>{{ user.surname }}</td>
+                <td>{{ user.email }}</td>
                 <td><img src="https://eemlqvkorfcljgmacfiq.supabase.co/storage/v1/object/public/clase10/{{ user.avatar }}" class="avatar"/></td>
                 <td>
                   <a

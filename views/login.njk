@@ -1,0 +1,34 @@
+<!-- HEAD -->
+{% include "templates/head.njk" %}
+
+<body>
+    <div class="container pb-4">
+        <h1 class="my-4">Login</h1>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        {% if err %}
+                            <h4 style="color: red">Error en la autenticacion</h4>
+                        {% endif %}
+                        <form action="/login" method="post" >
+                            <div class="mb-3">
+                                <label for="name" class="form-label">Email</label>
+                                <input type="email" name="username" placeholder="Ingresar password" class="form-control"
+                                    required="true" />
+                            </div>
+                            <div class="mb-3">
+                                <label for="surname" class="form-label">Password</label>
+                                <input type="password" name="password" placeholder="Ingresar password"
+                                    class="form-control" required="true" />
+                            </div>
+                            
+                            <button type="submit" id="button" class="btn btn-success">
+                                Login
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+</body>

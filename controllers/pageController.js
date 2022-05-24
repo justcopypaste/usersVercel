@@ -1,6 +1,7 @@
-const db = require('./database');
+const db = require('../config/database');
 
 const usuarios = (req, res) => {
+    if(!req.isAuthenticated()) return res.redirect('/login');
     db.getUsers().then((users)=>{
         res.render('users', {users: users});
     })
