@@ -80,10 +80,10 @@ const updateUser = (u) => {
     });
 }
 
-const deleteUser = (id) => {
+const deleteUser = (email) => {
     return new Promise((resolve, reject) => {
         User.destroy({
-            where: {id:id},
+            where: {email:email},
         }).then((res) => {
             resolve(res);
         }).catch((err)=>{
