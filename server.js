@@ -20,7 +20,7 @@ app.set("view engine", "njk");
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(__dirname+"/public"));
 app.use(session({
-  secret: process.env.SECRET,
+  secret: process.env.SECRET || "otro secreto",
   resave: false,
   saveUninitialized: false
 }));
