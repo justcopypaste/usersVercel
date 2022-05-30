@@ -21,7 +21,7 @@ const serializeUser = (user, done) => {
 const deserializeUser = (email, done) => {
     db.findUser(email)
     .then((u) => done(null, u))
-    .catch((err) => done(true, false));
+    .catch((err) => done("error", false));
     
 }
 
