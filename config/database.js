@@ -30,7 +30,7 @@ const initDB = () => {
     );
     
     sequelize.sync({
-        force: true
+        // force: true
     }).then(() => {
             //console.log(`¡Las tablas fueron creadas!`);
         }

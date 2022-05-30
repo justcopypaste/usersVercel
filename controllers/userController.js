@@ -78,15 +78,13 @@ const get_usuarios = (req, res) => {
             break;
 
         case "modificar":
-            db.findUser(req.query.id).then((user)=>{
+            db.findUser(req.query.email).then((user)=>{
                 res.render('edit_user', {user: user});
             });
             break;
 
         case "eliminar":
-            const id = req.query.id;
-            
-            db.deleteUser(id).then((r)=>{
+            db.deleteUser(req.query.email).then((r)=>{
                 res.redirect("/usuarios");
             });
             break;
