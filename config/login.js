@@ -3,8 +3,9 @@ const bcrypt = require('bcryptjs');
 
 const passportLogin = (user, pass, done) => {
     deserializeUser(user, (err, u)=>{
-        const passMatch = bcrypt.compareSync(pass, u.password);
+        if(err || !user) return done(null, false);
         
+        const passMatch = bcrypt.compareSync(pass, u.password);
         if(user == u.email && passMatch){
             done(null, u);
         }else{
@@ -18,9 +19,10 @@ const serializeUser = (user, done) => {
 }
 
 const deserializeUser = (email, done) => {
-    db.findUser(email).then((u)=>{
-        done(null, u);
-    });
+    db.findUser(email)
+    .then((u) => done(null, u))
+    .catch((err) => done(true, false));
+    
 }
 
 module.exports = {
