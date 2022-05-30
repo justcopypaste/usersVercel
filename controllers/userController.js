@@ -41,10 +41,11 @@ const post_usuarios =  (req, res) => {
 
         case "modificar":
             form.parse(req, (err, fields, files) => {
+                const newFileName = null;
                 if(files.avatar.originalFilename != ""){
                     const filePath = files.avatar.filepath;
                     const ext = path.extname(filePath);
-                    const newFileName = `image_${Date.now()}${ext}`;
+                    newFileName = `image_${Date.now()}${ext}`;
                     supabase.storage.from('clase10').upload(
                         newFileName,
                         fs.createReadStream(filePath),
@@ -55,13 +56,14 @@ const post_usuarios =  (req, res) => {
                     ).then((data, err) => {
                         if(err) console.log(err);
                     });
-                    
-                    db.findUser(fields.email).then((u)=>{
-                        db.updateUser(fields.email, fields.name, fields.surname, u.pass, newFileName).then((r)=>{
-                            res.redirect("/usuarios");
-                        });
-                    });
                 }
+                
+                db.findUser(fields.email).then((u)=>{
+                    const avatar =  newFileName ? newFileName : u.avatar;
+                    db.updateUser(fields.email, fields.name, fields.surname, u.pass, avatar).then((r)=>{
+                        res.redirect("/usuarios");
+                    });
+                });
             });
             break;
         
