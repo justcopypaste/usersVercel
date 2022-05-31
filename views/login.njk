@@ -8,8 +8,8 @@
             <div class="col-md-4">
                 <div class="card mb-4">
                     <div class="card-body">
-                        {% if err %}
-                            <h4 style="color: red">Error en la autenticacion</h4>
+                        {% if messages.error %}
+                            <h4 style="color: red">{{ messages.error }}</h4>
                         {% endif %}
                         <form action="/login" method="post" >
                             <div class="mb-3">

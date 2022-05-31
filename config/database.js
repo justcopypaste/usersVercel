@@ -71,7 +71,7 @@ const findUser = (email) => {
 
 const updateUser = (u) => {
     return new Promise((resolve, reject) => {
-        User.update({email: e.email, name: u.name, surname: u.surname, password: u.password, avatar: u.avatar},{where: {email: u.email}})
+        User.update({email: u.email, name: u.name, surname: u.surname, password: u.password, avatar: u.avatar},{where: {email: u.email}})
         .then((res) => {
             resolve(res);
         }).catch((err)=>{

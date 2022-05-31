@@ -41,8 +41,10 @@ const post_usuarios =  (req, res) => {
 
         case "modificar":
             form.parse(req, (err, fields, files) => {
-                const newFileName = null;
+                let newFileName = "";
+                let newAvatar = false;
                 if(files.avatar.originalFilename != ""){
+                    newAvatar = true;
                     const filePath = files.avatar.filepath;
                     const ext = path.extname(filePath);
                     newFileName = `image_${Date.now()}${ext}`;
@@ -59,7 +61,7 @@ const post_usuarios =  (req, res) => {
                 }
                 
                 db.findUser(fields.email).then((u)=>{
-                    const avatar =  newFileName ? newFileName : u.avatar;
+                    const avatar =  newAvatar ? newFileName : u.avatar;
                     db.updateUser(fields.email, fields.name, fields.surname, u.pass, avatar).then((r)=>{
                         res.redirect("/usuarios");
                     });
